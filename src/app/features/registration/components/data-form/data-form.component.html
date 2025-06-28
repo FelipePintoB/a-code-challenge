@@ -1,0 +1,57 @@
+<form class="form-container" [formGroup]="dataForm" (submit)="submitHandler()">
+  <div class="input-container">
+    <div>
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        class="input"
+        id="firstName"
+        formControlName="firstName"
+      />
+    </div>
+    <div>
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        class="input"
+        id="lastName"
+        formControlName="lastName"
+      />
+    </div>
+    <div>
+      <label for="state-select">Subscription</label>
+      <select id="state-select" formControlName="subscription">
+        @for (state of subscriptionOptions; track $index) {
+        <option [ngValue]="state.value">{{ state.name }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="input"
+        id="password"
+        formControlName="password"
+      />
+    </div>
+    <div>
+      <input
+        type="file"
+        class="file-input"
+        accept="csv"
+        (change)="uploadFileHandler($event)"
+        #fileInput
+      />
+      <button class="btn-outline" (click)="fileInput.click()" type="button">
+        Upload CSV File
+      </button>
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="btn-secondary" (click)="clearHandler()" type="button">
+      Clear
+    </button>
+    <button class="btn-primary" type="submit">Submit</button>
+  </div>
+</form>

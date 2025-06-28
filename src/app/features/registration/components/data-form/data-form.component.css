@@ -1,0 +1,20 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-container {
+  display: grid;
+  grid-template-rows: 3fr;
+  gap: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.file-input {
+  display: none;
+}
