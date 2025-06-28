@@ -1,0 +1,1 @@
+export * from "./data-registration-page/data-registration-page.component"

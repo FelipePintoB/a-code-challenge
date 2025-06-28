@@ -1,0 +1,1 @@
+export * from "./data-details-page/data-details-page.component"

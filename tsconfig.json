@@ -16,7 +16,13 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "baseUrl": "./",
+    "paths": {
+      "@dashboard/*": ["./src/app/features/dashboard/*"],
+      "@registration/*": ["./src/app/features/registration/*"],
+      "@shared/*": ["./src/app/shared/*"],
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
