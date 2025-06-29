@@ -18,14 +18,12 @@
         formControlName="lastName"
       />
     </div>
-    <div>
-      <label for="state-select">Subscription</label>
-      <select id="state-select" formControlName="subscription">
-        @for (state of subscriptionOptions; track $index) {
-        <option [ngValue]="state.value">{{ state.name }}</option>
-        }
-      </select>
-    </div>
+    <app-single-select
+      [label]="'Subscription'"
+      [options]="subscriptionOptions"
+      [initSelectedValue]="subscriptionOptions[1].value"
+      formControlName="subscription"
+    ></app-single-select>
     <div>
       <label for="password">Password</label>
       <input
