@@ -1,38 +1,32 @@
 <form class="form-container" [formGroup]="dataForm" (submit)="submitHandler()">
   <div class="input-container">
-    <div>
-      <label for="firstName">First Name</label>
-      <input
-        type="text"
-        class="input"
-        id="firstName"
-        formControlName="firstName"
-      />
-    </div>
-    <div>
-      <label for="lastName">Last Name</label>
-      <input
-        type="text"
-        class="input"
-        id="lastName"
-        formControlName="lastName"
-      />
-    </div>
+    <app-primary-text-input
+      [label]="'First Name'"
+      [placeholder]="'Input first name'"
+      [type]="'text'"
+      [errorMessage]="''"
+      formControlName="firstName"
+    ></app-primary-text-input>
+    <app-primary-text-input
+      [label]="'Last Name'"
+      [placeholder]="'Input last name'"
+      [type]="'text'"
+      [errorMessage]="''"
+      formControlName="lastName"
+    ></app-primary-text-input>
     <app-single-select
       [label]="'Subscription'"
       [options]="subscriptionOptions"
       [initSelectedValue]="subscriptionOptions[1].value"
       formControlName="subscription"
     ></app-single-select>
-    <div>
-      <label for="password">Password</label>
-      <input
-        type="password"
-        class="input"
-        id="password"
-        formControlName="password"
-      />
-    </div>
+    <app-primary-text-input
+      [label]="'Password'"
+      [placeholder]="'Input password'"
+      [type]="'password'"
+      [errorMessage]="''"
+      formControlName="password"
+    ></app-primary-text-input>
     <app-file-input
       [groupName]="'file'"
       [buttonLabel]="'Upload File'"

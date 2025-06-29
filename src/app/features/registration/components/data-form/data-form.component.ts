@@ -1,11 +1,17 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FileInputComponent, SingleSelectComponent } from '@shared/components';
+import { PrimaryTextInputComponent } from '@shared/components/primary-text-input/primary-text-input.component';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
-  imports: [ReactiveFormsModule, SingleSelectComponent, FileInputComponent],
+  imports: [
+    ReactiveFormsModule,
+    PrimaryTextInputComponent,
+    SingleSelectComponent,
+    FileInputComponent,
+  ],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css',
 })

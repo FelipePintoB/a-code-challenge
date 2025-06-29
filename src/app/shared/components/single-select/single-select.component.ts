@@ -22,7 +22,10 @@ export class SingleSelectComponent
   @Input({ required: true }) options!: SingleSelect[];
   @Input() initSelectedValue: string = '';
   @Input() placeholder: string = 'Select an option';
-  @Input() id: string = `selector-${Math.random().toString(36).substr(2, 9)}`;
+  @Input() id: string = `selector-${Math.random()
+    .toString(36)
+    .slice(2, 9)
+    .toString()}`;
 
   value: any = '';
   disabled: boolean = false;

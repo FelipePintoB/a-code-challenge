@@ -1,0 +1,26 @@
+.custom-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.custom-input.error {
+  border-color: var(--error);
+}
+
+.custom-input.error:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
