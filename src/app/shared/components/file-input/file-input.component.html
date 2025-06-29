@@ -1,0 +1,13 @@
+<div class="file-input-container">
+  <input
+    type="file"
+    class="file-input"
+    accept="csv"
+    (change)="uploadFileHandler($event)"
+    #fileInput
+  />
+  <button class="btn-outline" (click)="fileInput.click()" type="button">
+    {{ buttonLabel }}
+  </button>
+  <span class="file-name">{{ fileName }}</span>
+</div>

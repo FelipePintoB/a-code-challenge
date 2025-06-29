@@ -1,10 +1,11 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FileInputComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FileInputComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css',
 })
@@ -44,27 +45,8 @@ export class DataFormComponent implements OnInit, OnDestroy {
   }
 
   clearHandler() {
-    console.log('Clear handler');
-  }
-
-  uploadFileHandler(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const files: FileList | null = inputElement.files;
-    console.log({ event, files });
-
-    if (files && files.length > 0) {
-      const selectedFile: File = files[0];
-      const reader = new FileReader();
-      console.log(selectedFile.name);
-      console.log(selectedFile.type);
-
-      reader.onload = (e: any) => {
-        const csvContent = e.target.result;
-        console.log(csvContent);
-        // this.parseCsvData(csvContent);
-      };
-
-      reader.readAsText(selectedFile);
-    }
+    this.dataForm.reset({
+      subscription: this.subscriptionOptions[1].value,
+    });
   }
 }
