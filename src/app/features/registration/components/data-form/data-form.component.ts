@@ -9,6 +9,8 @@ import { FileInputComponent, SingleSelectComponent } from '@shared/components';
 import { PrimaryTextInputComponent } from '@shared/components/primary-text-input/primary-text-input.component';
 import { passwordValidator } from '@shared/validators/form.validators';
 import { Subscription } from 'rxjs';
+import { DataFormErrorsComponent } from '../data-form-errors/data-form-errors.component';
+import { ClearFormButtonComponent } from '../clear-form-button/clear-form-button.component';
 
 @Component({
   selector: 'app-data-form',
@@ -17,6 +19,8 @@ import { Subscription } from 'rxjs';
     PrimaryTextInputComponent,
     SingleSelectComponent,
     FileInputComponent,
+    DataFormErrorsComponent,
+    ClearFormButtonComponent,
   ],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css',
@@ -39,7 +43,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
           /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF\s'-]+$/
         ),
         Validators.minLength(2),
-        Validators.maxLength(5),
+        Validators.maxLength(30),
       ],
     ],
     email: ['', [Validators.required, Validators.email]],
@@ -55,91 +59,26 @@ export class DataFormComponent implements OnInit, OnDestroy {
     return this.dataForm.dirty;
   }
 
+  get hasFormErrors() {
+    return Object.keys(this.dataForm.controls).some((key) => {
+      return this.getControl(key)?.errors;
+    });
+  }
+
   getControl(fieldName: string) {
     return this.dataForm.get(fieldName) as FormControl | null;
   }
 
-  getErrorMessage(fieldName: string): string {
+  getErrorWarn(fieldName: string): string {
     const control = this.getControl(fieldName);
-    if (!control || !control.errors || !control.touched) return '';
-
-    if (control.errors['required']) {
-      return `${this.getFieldDisplayName(fieldName)} is required`;
-    }
-
-    if (control.errors['email']) {
-      return 'Please enter a valid email address';
-    }
-
-    if (control.errors['minlength']) {
-      return `${this.getFieldDisplayName(
-        fieldName
-      )} min length must be at least ${
-        control.errors['minlength'].requiredLength
-      } characters`;
-    }
-
-    if (control.errors['maxLength']) {
-      return `${this.getFieldDisplayName(
-        fieldName
-      )} max length must be at least ${
-        control.errors['maxLength'].requiredLength
-      } characters`;
-    }
-
-    if (control.errors['pattern']) {
-      return `Please enter valid value for ${this.getFieldDisplayName(
-        fieldName
-      )}`;
-    }
-
-    return '';
-  }
-
-  getPasswordErrorMessage(fieldName: string): string {
-    const control = this.getControl(fieldName);
-    if (!control || !control.errors || !control.touched) return '';
-
-    const errorMessage = this.getErrorMessage(fieldName);
-    if (!!errorMessage) return errorMessage;
-
-    const errorsMsg = [];
-    if (control.errors['exactLength']) {
-      errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} must be ${
-          control.errors['exactLength'].requiredLength
-        } characters`
-      );
-    }
-    if (control.errors['requiresLetter']) {
-      errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} requires at least 1 letter`
-      );
-    }
-
-    if (control.errors['requiresSpecialChar']) {
-      errorsMsg.push(
-        `${this.getFieldDisplayName(
-          fieldName
-        )} requires at least 1 special character`
-      );
-    }
-    return errorsMsg.reduce((prev, curr) => `${prev} ${curr} -`, '');
-  }
-
-  private getFieldDisplayName(fieldName: string): string {
-    const displayNames: { [key: string]: string } = {
-      firstName: 'First name',
-      lastName: 'Last name',
-      email: 'Email',
-      password: 'Password',
-    };
-    return displayNames[fieldName] || fieldName;
+    if (!control || !control.errors || !control.touched || !control.dirty)
+      return '';
+    return 'Field invalid';
   }
 
   ngOnInit() {
     this.formSubscription = this.dataForm.valueChanges.subscribe((data) => {
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -155,7 +94,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.dataForm.controls).forEach((key) => {
-        this.dataForm.get(key)?.markAsTouched();
+        this.getControl(key)?.markAsTouched();
       });
     }
   }
@@ -164,5 +103,6 @@ export class DataFormComponent implements OnInit, OnDestroy {
     this.dataForm.reset({
       subscription: this.initSubscriptionOption,
     });
+    this.dataForm.markAsPristine();
   }
 }

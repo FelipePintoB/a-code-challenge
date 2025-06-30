@@ -11,7 +11,7 @@
     [class]="'input ' + inputClasses"
   />
   @if (errorMessage && isTouched) {
-  <p>{{ errorMessage }}</p>
+  <p class="error-message">{{ errorMessage }}</p>
   } @else {
   <p style="opacity: 0">No message</p>
   }

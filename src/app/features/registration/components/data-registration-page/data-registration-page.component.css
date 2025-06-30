@@ -6,3 +6,26 @@
   justify-content: center;
   align-items: center;
 }
+
+.card-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 320px) {
+  .card-container {
+    padding: var(--spacing-1);
+  }
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
+  .card-container {
+    padding: var(--spacing-3);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card-container {
+    padding: var(--spacing-5);
+  }
+}

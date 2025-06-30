@@ -1,0 +1,12 @@
+<button
+  class="btn-secondary"
+  (click)="openConfirmationModal()"
+  type="button"
+  [disabled]="isDisabled"
+>
+  Clear
+</button>
+<app-clear-form-modal
+  [(visible)]="isModalOpened"
+  (onSubmit)="onClearHandler()"
+/>

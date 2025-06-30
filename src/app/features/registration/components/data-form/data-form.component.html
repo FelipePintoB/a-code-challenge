@@ -1,10 +1,13 @@
 <form class="form-container" [formGroup]="dataForm" (submit)="submitHandler()">
+  @if(hasFormErrors) {
+  <app-data-form-errors [dataForm]="dataForm"></app-data-form-errors>
+  }
   <div class="input-container">
     <app-primary-text-input
       [label]="'First and Last Name'"
       [placeholder]="'Input first and last name'"
       [type]="'text'"
-      [errorMessage]="getErrorMessage('name')"
+      [errorMessage]="getErrorWarn('name')"
       formControlName="name"
       [control]="getControl('name')"
     ></app-primary-text-input>
@@ -12,7 +15,7 @@
       [label]="'Email'"
       [placeholder]="'Input email'"
       [type]="'email'"
-      [errorMessage]="getErrorMessage('email')"
+      [errorMessage]="getErrorWarn('email')"
       formControlName="email"
       [control]="getControl('email')"
     ></app-primary-text-input>
@@ -26,7 +29,7 @@
       [label]="'Password'"
       [placeholder]="'Input password'"
       [type]="'password'"
-      [errorMessage]="getPasswordErrorMessage('password')"
+      [errorMessage]="getErrorWarn('password')"
       formControlName="password"
       [control]="getControl('password')"
     ></app-primary-text-input>
@@ -36,14 +39,10 @@
     ></app-file-input>
   </div>
   <div class="button-container">
-    <button
-      class="btn-secondary"
-      (click)="clearHandler()"
-      type="button"
-      [disabled]="!isFormDirty"
-    >
-      Clear
-    </button>
+    <app-clear-form-button
+      [isDisabled]="!isFormDirty"
+      (clearHandler)="clearHandler()"
+    />
     <button class="btn-primary" type="submit">Submit</button>
   </div>
 </form>

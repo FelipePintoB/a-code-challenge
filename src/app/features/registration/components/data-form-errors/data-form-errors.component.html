@@ -1,0 +1,9 @@
+<div class="form-error-container">
+  @for (displayName of displayNamesArray; track $index) { @if
+  (getErrorMessage(displayName)) {
+  <div class="error-message-container">
+    <h3 class="error-message-tittle">{{ displayName }}</h3>
+    <p class="error-message">{{ getErrorMessage(displayName) }}</p>
+  </div>
+  } }
+</div>
