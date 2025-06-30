@@ -24,8 +24,8 @@ export class FileInputComponent implements OnInit, OnDestroy {
     this.parentFormGroup.addControl(
       this.groupName,
       this.formBuilder.group({
-        fileName: '',
-        fileData: '',
+        fileName: null,
+        fileData: null,
       })
     );
   }

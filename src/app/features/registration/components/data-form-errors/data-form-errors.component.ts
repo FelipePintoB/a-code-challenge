@@ -26,45 +26,51 @@ export class DataFormErrorsComponent {
 
   getErrorMessage(fieldName: string): string {
     const control = this.getControl(fieldName);
-    if (!control || !control.errors || !control.touched || !control.dirty)
-      return '';
+    if (!control || !control.errors || !control.touched) return '';
+    const { errors } = control;
 
     const errorsMsg = [];
     const displayName = this.getFieldDisplayName(fieldName);
-    if (control.errors['required']) {
+    if (errors['required']) {
       errorsMsg.push(`${displayName} is required`);
     }
 
-    if (control.errors['email']) {
+    if (errors['email']) {
       errorsMsg.push('Please enter a valid email address');
     }
 
-    if (control.errors['minlength']) {
+    if (errors['minlength']) {
       errorsMsg.push(
-        `${displayName} min length must be at least ${control.errors['minlength'].requiredLength} characters`
+        `${displayName} min length must be at least ${errors['minlength'].requiredLength} characters`
       );
     }
 
-    if (control.errors['maxlength']) {
+    if (errors['maxlength']) {
       errorsMsg.push(
-        `${displayName} max length must be at least ${control.errors['maxlength'].requiredLength} characters`
+        `${displayName} max length must be at least ${errors['maxlength'].requiredLength} characters`
       );
     }
 
-    if (control.errors['pattern']) {
+    if (errors['pattern']) {
       errorsMsg.push(`Please enter valid value for ${displayName}`);
     }
 
-    if (control.errors['exactLength']) {
+    if (errors['fullName']) {
       errorsMsg.push(
-        `${displayName} must be ${control.errors['exactLength'].requiredLength} characters, current ${control.errors['exactLength'].actualLength}`
+        `${errors['fullName'].message}, actual value '${errors['fullName'].actualValue}'`
       );
     }
-    if (control.errors['requiresLetter']) {
+
+    if (errors['exactLength']) {
+      errorsMsg.push(
+        `${displayName} must be ${errors['exactLength'].requiredLength} characters, current ${errors['exactLength'].actualLength}`
+      );
+    }
+    if (errors['requiresLetter']) {
       errorsMsg.push(`${displayName} requires at least 1 letter`);
     }
 
-    if (control.errors['requiresSpecialChar']) {
+    if (errors['requiresSpecialChar']) {
       errorsMsg.push(
         `${this.getFieldDisplayName(
           fieldName

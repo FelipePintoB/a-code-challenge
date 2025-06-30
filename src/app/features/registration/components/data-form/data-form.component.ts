@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,12 +7,15 @@ import {
 } from '@angular/forms';
 import { FileInputComponent, SingleSelectComponent } from '@shared/components';
 import { PrimaryTextInputComponent } from '@shared/components/primary-text-input/primary-text-input.component';
-import { passwordValidator } from '@core/validators/form.validators';
-import { Subscription } from 'rxjs';
+import {
+  passwordValidator,
+  strictFullNameValidator,
+} from '@core/validators/form.validators';
 import { DataFormErrorsComponent } from '../data-form-errors/data-form-errors.component';
 import { ClearFormButtonComponent } from '../clear-form-button/clear-form-button.component';
 import { DashboardDataService } from '@core/services/dashboard-data.service';
 import { parseCSV } from '@core/utils/data.handler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data-form',
@@ -27,10 +30,10 @@ import { parseCSV } from '@core/utils/data.handler';
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css',
 })
-export class DataFormComponent implements OnInit, OnDestroy {
+export class DataFormComponent {
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   private dashboardDataService = inject(DashboardDataService);
-  private formSubscription!: Subscription;
 
   subscriptionOptions = [
     { name: 'Basic', value: 'basic' },
@@ -42,15 +45,13 @@ export class DataFormComponent implements OnInit, OnDestroy {
     name: [
       '',
       [
-        Validators.pattern(
-          /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF\s'-]+$/
-        ),
+        strictFullNameValidator,
         Validators.minLength(2),
         Validators.maxLength(30),
       ],
     ],
     email: ['', [Validators.required, Validators.email]],
-    subscription: '',
+    subscription: 'advance',
     password: ['', [Validators.required, passwordValidator]],
   });
 
@@ -74,21 +75,8 @@ export class DataFormComponent implements OnInit, OnDestroy {
 
   getErrorWarn(fieldName: string): string {
     const control = this.getControl(fieldName);
-    if (!control || !control.errors || !control.touched || !control.dirty)
-      return '';
+    if (!control || !control.errors || !control.touched) return '';
     return 'Field invalid';
-  }
-
-  ngOnInit() {
-    this.formSubscription = this.dataForm.valueChanges.subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.formSubscription) {
-      this.formSubscription.unsubscribe();
-    }
   }
 
   submitHandler() {
@@ -104,18 +92,20 @@ export class DataFormComponent implements OnInit, OnDestroy {
         password: formValues['password'] || '',
         tableData: parseCSV(tableDataText),
       });
+      this.router.navigate(['/dashboard']);
     } else {
       Object.keys(this.dataForm.controls).forEach((key) => {
         this.getControl(key)?.markAsTouched();
-        this.getControl(key)?.markAsDirty();
       });
     }
   }
 
   clearHandler() {
     this.dataForm.reset({
+      name: '',
+      email: '',
       subscription: this.initSubscriptionOption,
+      password: '',
     });
-    this.dataForm.markAsPristine();
   }
 }

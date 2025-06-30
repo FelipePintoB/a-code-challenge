@@ -22,8 +22,9 @@
     <app-single-select
       [label]="'Subscription'"
       [options]="subscriptionOptions"
-      [initSelectedValue]="subscriptionOptions[1].value"
+      [initSelectedValue]="initSubscriptionOption"
       formControlName="subscription"
+      [control]="getControl('subscription')"
     ></app-single-select>
     <app-primary-text-input
       [label]="'Password'"
@@ -40,8 +41,8 @@
   </div>
   <div class="button-container">
     <app-clear-form-button
-      [isDisabled]="!isFormDirty"
       (clearHandler)="clearHandler()"
+      [isDirty]="isFormDirty"
     />
     <button class="btn-primary" type="submit">Submit</button>
   </div>

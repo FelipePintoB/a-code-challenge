@@ -3,8 +3,12 @@
   <div class="modal-content" (click)="$event.stopPropagation()">
     <p>Do you want to discard changes?</p>
     <div class="modal-buttons">
-      <button class="btn-outline" (click)="close()">Cancel</button>
-      <button class="btn-secondary" (click)="submit()">Clear</button>
+      <button type="button" class="btn-outline" (click)="close()">
+        Cancel
+      </button>
+      <button type="button" class="btn-secondary" (click)="submit()">
+        Clear
+      </button>
     </div>
   </div>
 </div>

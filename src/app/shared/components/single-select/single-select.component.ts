@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { SingleSelect } from '@shared/interfaces';
 
 @Component({
@@ -18,6 +22,7 @@ import { SingleSelect } from '@shared/interfaces';
 export class SingleSelectComponent
   implements ControlValueAccessor, AfterViewInit
 {
+  @Input() control: FormControl | null = null;
   @Input({ required: true }) label!: string;
   @Input({ required: true }) options!: SingleSelect[];
   @Input() initSelectedValue: string = '';
@@ -37,6 +42,11 @@ export class SingleSelectComponent
   ngAfterViewInit(): void {
     this.value = this.initSelectedValue;
     this.onChange(this.initSelectedValue);
+    setTimeout(() => {
+      if (this.control) {
+        this.control.markAsPristine();
+      }
+    }, 200);
   }
 
   onSelectionChange(event: Event): void {

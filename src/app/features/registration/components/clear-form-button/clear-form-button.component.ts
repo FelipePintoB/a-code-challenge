@@ -8,13 +8,17 @@ import { ClearFormModalComponent } from '../clear-form-modal/clear-form-modal.co
   styleUrl: './clear-form-button.component.css',
 })
 export class ClearFormButtonComponent {
-  @Input() isDisabled = false;
+  @Input() isDirty = false;
   @Output() clearHandler = new EventEmitter<boolean>();
 
   isModalOpened = false;
 
   openConfirmationModal() {
-    this.isModalOpened = true;
+    if (this.isDirty) {
+      this.isModalOpened = true;
+    } else {
+      this.onClearHandler();
+    }
   }
 
   onClearHandler() {
