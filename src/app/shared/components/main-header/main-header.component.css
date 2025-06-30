@@ -8,6 +8,10 @@
   background-color: var(--surface-card);
 }
 
+.main-header h1 {
+  color: var(--primary-500);
+}
+
 .header-links {
   display: flex;
   justify-content: space-between;

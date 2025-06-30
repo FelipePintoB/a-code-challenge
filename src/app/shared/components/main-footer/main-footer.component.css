@@ -7,3 +7,9 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.custom-link {
+  color: var(--secondary-500);
+  text-decoration: none;
+  font-weight: bold;
+}

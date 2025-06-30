@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardDataService } from '@core/services/dashboard-data.service';
 
 @Component({
@@ -10,4 +11,10 @@ import { DashboardDataService } from '@core/services/dashboard-data.service';
 })
 export class DataDetailsPageComponent {
   dashboardDataService = inject(DashboardDataService);
+  private router = inject(Router);
+
+  goBack() {
+    this.dashboardDataService.clearState();
+    this.router.navigate(['']);
+  }
 }

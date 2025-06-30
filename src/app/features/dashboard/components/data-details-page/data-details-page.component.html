@@ -1,7 +1,9 @@
 <div class="dashboard-container">
-  <h1>Dashboard</h1>
+  <div class="dashboard-header-container">
+    <h1>Dashboard</h1>
+    <button type="button" class="btn-secondary" (click)="goBack()">Back</button>
+  </div>
 
-  <!-- User Information Section -->
   <div class="user-info-container">
     <h2>User Information</h2>
     <div class="card info-grid">
@@ -28,7 +30,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="data-table-container">
     <h2>Data Table</h2>
     @if (dashboardDataService.$state().tableData.columns.length > 0) {
     <div class="card table-container">
@@ -37,7 +39,11 @@
           <tr>
             @for (column of dashboardDataService.$state().tableData.columns;
             track column) {
-            <th>{{ column }}</th>
+            <th>
+              <p>
+                {{ column }}
+              </p>
+            </th>
             }
           </tr>
         </thead>
@@ -46,7 +52,11 @@
           $index) {
           <tr>
             @for (cell of row; track $index) {
-            <td class="row-cell">{{ cell }}</td>
+            <td class="row-cell">
+              <p>
+                {{ cell }}
+              </p>
+            </td>
             }
           </tr>
           } @empty {
