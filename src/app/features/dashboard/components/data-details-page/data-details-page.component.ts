@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DashboardDataService } from '@core/services/dashboard-data.service';
+import { DataDetailsTableComponent } from '../data-details-table/data-details-table.component';
 
 @Component({
   selector: 'app-data-details-page',
-  imports: [],
+  imports: [DataDetailsTableComponent],
   standalone: true,
   templateUrl: './data-details-page.component.html',
   styleUrl: './data-details-page.component.css',

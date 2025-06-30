@@ -35,82 +35,29 @@ h2 {
   color: var(--secondary-500);
 }
 
-.data-table-container h2 {
-  color: var(--primary-300);
-}
-
-.table-container {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto; /* Enable horizontal scrolling */
-}
-
-.data-table {
-  width: 100%;
-  min-width: 600px; /* Your minimum width */
-  border-collapse: collapse;
-}
-
-.data-table thead {
-  border-bottom: var(--primary-500) solid 1px;
-}
-
-.data-table th {
-  color: var(--primary-500);
-}
-
-.data-table th,
-.data-table td {
-  padding: var(--spacing-3) var(--spacing-4);
-  border-right: var(--primary-500) solid 1px;
-}
-
-.data-table th:last-child {
-  border-right: none; /* Red right border for last cell */
-}
-
-.data-table td:last-child {
-  border-right: none; /* Red right border for last cell */
-}
-
 @media (max-width: 320px) {
-  .data-table th,
-  .data-table td {
-    padding: var(--spacing-1) var(--spacing-2);
-  }
   .dashboard-container {
     padding: var(--spacing-3) var(--spacing-1);
   }
-  .info-grid,
-  .table-container {
+  .info-grid {
     padding: var(--spacing-1);
   }
 }
 
 @media (min-width: 321px) and (max-width: 768px) {
-  .data-table th,
-  .data-table td {
-    padding: var(--spacing-2) var(--spacing-2);
-  }
   .dashboard-container {
     padding: var(--spacing-3) var(--spacing-3);
   }
-  .info-grid,
-  .table-container {
+  .info-grid {
     padding: var(--spacing-3);
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .data-table th,
-  .data-table td {
-    padding: var(--spacing-3) var(--spacing-4);
-  }
   .dashboard-container {
     padding: var(--spacing-3) var(--spacing-4);
   }
-  .info-grid,
-  .table-container {
+  .info-grid {
     padding: var(--spacing-5);
   }
 }

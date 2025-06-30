@@ -30,54 +30,5 @@
     </div>
   </div>
 
-  <div class="data-table-container">
-    <h2>Data Table</h2>
-    @if (dashboardDataService.$state().tableData.columns.length > 0) {
-    <div class="card table-container">
-      <table class="data-table">
-        <thead>
-          <tr>
-            @for (column of dashboardDataService.$state().tableData.columns;
-            track column) {
-            <th>
-              <p>
-                {{ column }}
-              </p>
-            </th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of dashboardDataService.$state().tableData.rows; track
-          $index) {
-          <tr>
-            @for (cell of row; track $index) {
-            <td class="row-cell">
-              <p>
-                {{ cell }}
-              </p>
-            </td>
-            }
-          </tr>
-          } @empty {
-          <tr>
-            <td
-              [attr.colspan]="
-                dashboardDataService.$state().tableData.columns.length
-              "
-              class="no-data"
-            >
-              No data available
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-    } @else {
-    <div class="no-table">
-      <p>No table structure defined</p>
-    </div>
-    }
-  </div>
+  <app-data-details-table />
 </div>

@@ -26,6 +26,7 @@
 .modal-buttons {
   display: flex;
   justify-content: space-evenly;
+  gap: var(--spacing-3);
 }
 
 @media (max-width: 320px) {
