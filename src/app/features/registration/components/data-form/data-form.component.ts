@@ -7,10 +7,12 @@ import {
 } from '@angular/forms';
 import { FileInputComponent, SingleSelectComponent } from '@shared/components';
 import { PrimaryTextInputComponent } from '@shared/components/primary-text-input/primary-text-input.component';
-import { passwordValidator } from '@shared/validators/form.validators';
+import { passwordValidator } from '@core/validators/form.validators';
 import { Subscription } from 'rxjs';
 import { DataFormErrorsComponent } from '../data-form-errors/data-form-errors.component';
 import { ClearFormButtonComponent } from '../clear-form-button/clear-form-button.component';
+import { DashboardDataService } from '@core/services/dashboard-data.service';
+import { parseCSV } from '@core/utils/data.handler';
 
 @Component({
   selector: 'app-data-form',
@@ -27,6 +29,7 @@ import { ClearFormButtonComponent } from '../clear-form-button/clear-form-button
 })
 export class DataFormComponent implements OnInit, OnDestroy {
   private formBuilder = inject(FormBuilder);
+  private dashboardDataService = inject(DashboardDataService);
   private formSubscription!: Subscription;
 
   subscriptionOptions = [
@@ -47,7 +50,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
       ],
     ],
     email: ['', [Validators.required, Validators.email]],
-    subscription: [''],
+    subscription: '',
     password: ['', [Validators.required, passwordValidator]],
   });
 
@@ -78,7 +81,7 @@ export class DataFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formSubscription = this.dataForm.valueChanges.subscribe((data) => {
-      // console.log(data);
+      console.log(data);
     });
   }
 
@@ -90,11 +93,21 @@ export class DataFormComponent implements OnInit, OnDestroy {
 
   submitHandler() {
     if (this.dataForm.valid) {
-      console.log('Form submitted:', this.dataForm.value);
+      const formValues = this.dataForm.value;
+      const fileNestedField = this.dataForm.get('file.fileData');
+
+      const tableDataText = fileNestedField ? fileNestedField.value || '' : '';
+      this.dashboardDataService.setData({
+        name: formValues['name'] || '',
+        email: formValues['email'] || '',
+        subscription: formValues['subscription'] || '',
+        password: formValues['password'] || '',
+        tableData: parseCSV(tableDataText),
+      });
     } else {
-      // Mark all fields as touched to show validation errors
       Object.keys(this.dataForm.controls).forEach((key) => {
         this.getControl(key)?.markAsTouched();
+        this.getControl(key)?.markAsDirty();
       });
     }
   }

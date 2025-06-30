@@ -30,8 +30,9 @@ export class DataFormErrorsComponent {
       return '';
 
     const errorsMsg = [];
+    const displayName = this.getFieldDisplayName(fieldName);
     if (control.errors['required']) {
-      errorsMsg.push(`${this.getFieldDisplayName(fieldName)} is required`);
+      errorsMsg.push(`${displayName} is required`);
     }
 
     if (control.errors['email']) {
@@ -40,37 +41,27 @@ export class DataFormErrorsComponent {
 
     if (control.errors['minlength']) {
       errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} min length must be at least ${
-          control.errors['minlength'].requiredLength
-        } characters`
+        `${displayName} min length must be at least ${control.errors['minlength'].requiredLength} characters`
       );
     }
 
     if (control.errors['maxlength']) {
       errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} max length must be at least ${
-          control.errors['maxlength'].requiredLength
-        } characters`
+        `${displayName} max length must be at least ${control.errors['maxlength'].requiredLength} characters`
       );
     }
 
     if (control.errors['pattern']) {
-      errorsMsg.push(
-        `Please enter valid value for ${this.getFieldDisplayName(fieldName)}`
-      );
+      errorsMsg.push(`Please enter valid value for ${displayName}`);
     }
 
     if (control.errors['exactLength']) {
       errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} must be ${
-          control.errors['exactLength'].requiredLength
-        } characters`
+        `${displayName} must be ${control.errors['exactLength'].requiredLength} characters, current ${control.errors['exactLength'].actualLength}`
       );
     }
     if (control.errors['requiresLetter']) {
-      errorsMsg.push(
-        `${this.getFieldDisplayName(fieldName)} requires at least 1 letter`
-      );
+      errorsMsg.push(`${displayName} requires at least 1 letter`);
     }
 
     if (control.errors['requiresSpecialChar']) {

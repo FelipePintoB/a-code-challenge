@@ -1,10 +1,5 @@
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  ControlContainer,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ControlContainer, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-file-input',
@@ -29,8 +24,8 @@ export class FileInputComponent implements OnInit, OnDestroy {
     this.parentFormGroup.addControl(
       this.groupName,
       this.formBuilder.group({
-        fileName: ['', [Validators.required]],
-        fileData: ['', [Validators.required]],
+        fileName: '',
+        fileData: '',
       })
     );
   }

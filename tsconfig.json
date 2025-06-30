@@ -22,7 +22,8 @@
       "@dashboard/*": ["./src/app/features/dashboard/*"],
       "@registration/*": ["./src/app/features/registration/*"],
       "@shared/*": ["./src/app/shared/*"],
-    },
+      "@core/*": ["./src/app/core/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
