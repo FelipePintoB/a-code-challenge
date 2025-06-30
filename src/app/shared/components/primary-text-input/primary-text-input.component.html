@@ -10,7 +10,7 @@
     (blur)="onBlur()"
     [class]="'input ' + inputClasses"
   />
-  @if (errorMessage && touched) {
+  @if (errorMessage && isTouched) {
   <p>{{ errorMessage }}</p>
   } @else {
   <p style="opacity: 0">No message</p>

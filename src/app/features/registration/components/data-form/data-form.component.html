@@ -1,18 +1,20 @@
 <form class="form-container" [formGroup]="dataForm" (submit)="submitHandler()">
   <div class="input-container">
     <app-primary-text-input
-      [label]="'First Name'"
-      [placeholder]="'Input first name'"
+      [label]="'First and Last Name'"
+      [placeholder]="'Input first and last name'"
       [type]="'text'"
-      [errorMessage]="''"
-      formControlName="firstName"
+      [errorMessage]="getErrorMessage('name')"
+      formControlName="name"
+      [control]="getControl('name')"
     ></app-primary-text-input>
     <app-primary-text-input
-      [label]="'Last Name'"
-      [placeholder]="'Input last name'"
-      [type]="'text'"
-      [errorMessage]="''"
-      formControlName="lastName"
+      [label]="'Email'"
+      [placeholder]="'Input email'"
+      [type]="'email'"
+      [errorMessage]="getErrorMessage('email')"
+      formControlName="email"
+      [control]="getControl('email')"
     ></app-primary-text-input>
     <app-single-select
       [label]="'Subscription'"
@@ -24,8 +26,9 @@
       [label]="'Password'"
       [placeholder]="'Input password'"
       [type]="'password'"
-      [errorMessage]="''"
+      [errorMessage]="getPasswordErrorMessage('password')"
       formControlName="password"
+      [control]="getControl('password')"
     ></app-primary-text-input>
     <app-file-input
       [groupName]="'file'"
@@ -33,7 +36,12 @@
     ></app-file-input>
   </div>
   <div class="button-container">
-    <button class="btn-secondary" (click)="clearHandler()" type="button">
+    <button
+      class="btn-secondary"
+      (click)="clearHandler()"
+      type="button"
+      [disabled]="!isFormDirty"
+    >
       Clear
     </button>
     <button class="btn-primary" type="submit">Submit</button>

@@ -1,5 +1,9 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-primary-text-input',
@@ -15,6 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class PrimaryTextInputComponent implements ControlValueAccessor {
+  @Input() control: FormControl | null = null;
   @Input({ required: true }) label: string = '';
   @Input() placeholder: string = '';
   @Input() type: 'text' | 'email' | 'password' = 'text';
@@ -26,7 +31,12 @@ export class PrimaryTextInputComponent implements ControlValueAccessor {
 
   value = '';
   disabled = false;
-  touched = false;
+
+  timeoutId: any;
+
+  get isTouched(): boolean {
+    return !!this.control?.touched;
+  }
 
   // ControlValueAccessor callback functions
   private onChange = (value: string) => {};
@@ -34,7 +44,7 @@ export class PrimaryTextInputComponent implements ControlValueAccessor {
 
   get inputClasses(): string {
     let classes = 'custom-input';
-    if (this.errorMessage && this.touched) {
+    if (this.errorMessage && this.isTouched) {
       classes += ' error';
     }
     return classes;
@@ -59,13 +69,15 @@ export class PrimaryTextInputComponent implements ControlValueAccessor {
 
   // Event handlers
   onInput(event: Event): void {
+    clearTimeout(this.timeoutId);
     const target = event.target as HTMLInputElement;
     this.value = target.value;
-    this.onChange(this.value);
+    this.timeoutId = setTimeout(() => {
+      this.onChange(this.value);
+    }, 400);
   }
 
   onBlur(): void {
-    this.touched = true;
     this.onTouched();
   }
 }
