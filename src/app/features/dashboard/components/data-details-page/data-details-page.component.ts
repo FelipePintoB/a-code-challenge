@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DashboardDataService } from '@core/services/dashboard-data.service';
 
 @Component({
   selector: 'app-data-details-page',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './data-details-page.component.html',
   styleUrl: './data-details-page.component.css',
 })
-export class DataDetailsPageComponent {}
+export class DataDetailsPageComponent {
+  dashboardDataService = inject(DashboardDataService);
+}

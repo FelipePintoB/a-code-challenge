@@ -1,1 +1,73 @@
-<p>data-details-page works!</p>
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+
+  <!-- User Information Section -->
+  <div class="user-info-container">
+    <h2>User Information</h2>
+    <div class="card info-grid">
+      <div class="info-item">
+        <label class="item-label">Name:</label>
+        <span>{{ dashboardDataService.$state().name || "Not set" }}</span>
+      </div>
+      <div class="info-item">
+        <label class="item-label">Email:</label>
+        <span>{{ dashboardDataService.$state().email || "Not set" }}</span>
+      </div>
+      <div class="info-item">
+        <label class="item-label">Subscription:</label>
+        <span>{{
+          dashboardDataService.$state().subscription || "Not set"
+        }}</span>
+      </div>
+      <div class="info-item">
+        <label class="item-label">Password:</label>
+        <span>{{
+          dashboardDataService.$state().password ? "••••••••" : "Not set"
+        }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Data Table</h2>
+    @if (dashboardDataService.$state().tableData.columns.length > 0) {
+    <div class="card table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            @for (column of dashboardDataService.$state().tableData.columns;
+            track column) {
+            <th>{{ column }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of dashboardDataService.$state().tableData.rows; track
+          $index) {
+          <tr>
+            @for (cell of row; track $index) {
+            <td class="row-cell">{{ cell }}</td>
+            }
+          </tr>
+          } @empty {
+          <tr>
+            <td
+              [attr.colspan]="
+                dashboardDataService.$state().tableData.columns.length
+              "
+              class="no-data"
+            >
+              No data available
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @else {
+    <div class="no-table">
+      <p>No table structure defined</p>
+    </div>
+    }
+  </div>
+</div>

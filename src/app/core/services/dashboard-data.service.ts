@@ -1,21 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { DashboardData } from '@shared/interfaces/dashboard.interfaces';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardDataService {
-  private dashboardData = new BehaviorSubject<DashboardData | null>(null);
+  private readonly initialState: DashboardData = {
+    name: '',
+    email: '',
+    subscription: '',
+    password: '',
+    tableData: {
+      columns: [],
+      rows: [],
+    },
+  };
 
-  dataChange$: Observable<DashboardData | null> =
-    this.dashboardData.asObservable();
+  private state = signal<DashboardData>(this.initialState);
 
-  setData(data: DashboardData): void {
-    this.dashboardData.next(data);
+  readonly $state: Signal<DashboardData> = this.state.asReadonly();
+
+  setState(newState: Partial<DashboardData>): void {
+    this.state.update((current) => ({
+      ...current,
+      ...newState,
+    }));
   }
 
-  clearData(): void {
-    this.dashboardData.next(null);
+  clearState(): void {
+    this.state.set(this.initialState);
   }
 }

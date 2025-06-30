@@ -5,7 +5,6 @@ export const parseCSV = (csvText: string) => {
     .split(/\r?\n/)
     .filter((d) => d);
 
-  console.log(lines);
   if (lines.length === 0) {
     return { columns: [], rows: [] };
   }

@@ -85,7 +85,7 @@ export class DataFormComponent {
       const fileNestedField = this.dataForm.get('file.fileData');
 
       const tableDataText = fileNestedField ? fileNestedField.value || '' : '';
-      this.dashboardDataService.setData({
+      this.dashboardDataService.setState({
         name: formValues['name'] || '',
         email: formValues['email'] || '',
         subscription: formValues['subscription'] || '',
